@@ -107,9 +107,28 @@ return [
     ],
 ];
 ```
-You can add as many controller mappings as you want. Each mapping item for one feedback form instance.
 
-In view-file add widget call:
+You can add as many controller mappings as you want. Each controller mapping represents one feedback form instance.
+
+If you use "'enableStrictParsing' => true" in your urlManager, than you need to add rule:
+
+```php
+return [
+    ...
+    'urlManager' => [
+        ...
+        'enableStrictParsing' => true,
+        'rules' => [
+            ...
+            '<controller>/send' => '<controller>/send',
+        ],
+    ],
+];
+```
+
+Instead of \<controller\> you can use particular controller id's defined in 'controllerMap'.
+
+In View add widget call:
 
 ```php
 <?= \andrewdanilov\feedback\FeedbackWidget::widget([
