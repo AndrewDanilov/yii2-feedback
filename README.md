@@ -33,17 +33,17 @@ return [
     'components' => [
         ...
         'mailer' => [
-			'class' => 'yii\swiftmailer\Mailer',
-			'useFileTransport' => false,
-			'transport' => [
-				'class' => 'Swift_SmtpTransport',
+            'class' => 'yii\swiftmailer\Mailer',
+            'useFileTransport' => false,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
                 'username' => 'admin@example.com',
                 'password' => 'yourpassword',
                 'host' => 'smtp.example.com',
                 'port' => '465',
                 'encryption' => 'ssl',
-			],
-		],
+            ],
+        ],
     ],
     ...
     'controllerMap' => [
