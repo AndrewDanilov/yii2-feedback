@@ -46,15 +46,15 @@ use yii\widgets\ActiveForm;
 					->textarea($options);
 				break;
 			case 'radio':
+				$options['label'] = $field['label'];
 				echo $form
 					->field($model, 'data[' . $name . ']')
-					->label($field['label'])
 					->radio($options);
 				break;
 			case 'checkbox':
+				$options['label'] = $field['label'];
 				echo $form
 					->field($model, 'data[' . $name . ']')
-					->label($field['label'])
 					->checkbox($options);
 				break;
 			case 'select':
