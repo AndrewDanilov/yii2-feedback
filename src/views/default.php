@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 <div class="feedback-form">
 
-	<?php $form = ActiveForm::begin(['action' => [$controller . '/send']]); ?>
+	<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => ['data-feedback-form' => '']]); ?>
 
 	<?php
 	foreach ($fields as $name => $field) {

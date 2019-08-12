@@ -11,7 +11,7 @@ $(function () {
 	//	'<a href="javascript:$.fancybox.close();" class="close-btn">x</a>';
 
 	// обрабатываются только формы с атрибутом data-feedback
-	$('form[data-feedback]').on('submit', function(e) {
+	$('form[data-feedback-form]').on('submit', function(e) {
 
 		var delay = 4000; // задержка исчезновения лайтбокса в миллисекундах (0 - не скрывать)
 		var wait_msg = 'Отправка...'; // сообщение об отправке (оставить пустым чтоб не показывать)
