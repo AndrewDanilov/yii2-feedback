@@ -9,6 +9,7 @@ use yii\web\Response;
 class FeedbackController extends Controller
 {
 	public $mailTpl;
+	public $formTpl;
 	public $from = [];
 	public $to = [];
 	public $subject;
@@ -22,7 +23,7 @@ class FeedbackController extends Controller
 			$this->mailTpl = '@andrewdanilov/feedback/mail/default';
 		}
 		if (empty($this->formTpl)) {
-			$this->mailTpl = '@andrewdanilov/feedback/views/default';
+			$this->formTpl = '@andrewdanilov/feedback/views/default';
 		}
 		if (empty($this->subject)) {
 			$this->subject = 'Mail from site';
@@ -44,7 +45,10 @@ class FeedbackController extends Controller
 				if ($model->load(Yii::$app->request->post())) {
 					Yii::$app->response->format = Response::FORMAT_JSON;
 					if ($model->sendFeedback($this->mailTpl, $this->from, $this->to, $this->subject, $this->fields)) {
-						return ['success' => '1'];
+						return [
+							'success' => '1',
+							'callback' => $this->jsCallback,
+						];
 					} else {
 						return ['errors' => $model->errors];
 					}

@@ -34,8 +34,6 @@ $(function () {
 			action = cur_action;
 		}
 
-		var callback_function = form.find('data-callback');
-
 		var submit_div = form.find('[type="submit"]');
 		if (submit_div.hasClass('btn-disabled')) {
 			// if form in process - exiting
@@ -79,8 +77,8 @@ $(function () {
 						form.hide();
 					}
 				}
-				if (callback_function && typeof window[callback_function] === 'function') {
-					var callback = window[callback_function];
+				if (result.callback && typeof window[result.callback] === 'function') {
+					var callback = window[result.callback];
 					callback(form);
 				}
 				if (redirect) {

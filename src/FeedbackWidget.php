@@ -25,18 +25,12 @@ class FeedbackWidget extends Widget
 		} else {
 			return false;
 		}
-		if (isset($controller_conf['jsCallback'])) {
-			$jsCallback = $controller_conf['jsCallback'];
-		} else {
-			$jsCallback = false;
-		}
 
 		$model = new FeedbackForm();
 		return $this->render($formTpl, [
 			'controller' => $this->controller,
 			'model' => $model,
 			'fields' => $fields,
-			'jsCallback' => $jsCallback,
 		]);
 	}
 }
