@@ -135,20 +135,11 @@ In View add widget call:
     'controller' => 'callback',
     // optional: instead of form displays button, which call floating form on click
     'fancybox' => [
-        'button' => 'div', // optional: tag represents button (div, span, i, etc.)
+        'button' => 'div', // optional: tag represents button (div, span, i, a, etc.)
         'label' => 'Call me!', // optional: button name
         'options' => ['class' => 'callback-btn'], // optional: options for yii Html::tag() helper
     ],
-    // optional: js-code to execute after success submit happen
+    // optional: javascript code to execute after success submit happen
     'jsCallback' => "ga('send', 'event', 'my_form', 'submit'); yaCounter100500.reachGoal('my_goal');",
 ]) ?>
-```
-
-You can use 'jsCallback' param, to define js-function, which would be called after successfull form submit. In that function you can execute analytic goals, i.e. Google Analytics or Yandex Metrika:
-
-```js
-function formSubmitted(form) {
-    ga('send', 'event', 'my_form', 'submit');
-    yaCounter100500.reachGoal('my_goal');
-}
 ```
