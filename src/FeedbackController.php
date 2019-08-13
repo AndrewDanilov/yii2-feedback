@@ -13,7 +13,6 @@ class FeedbackController extends Controller
 	public $from = [];
 	public $to = [];
 	public $subject;
-	public $jsCallback;
 	public $fields = [];
 
 	public function init()
@@ -45,10 +44,7 @@ class FeedbackController extends Controller
 				if ($model->load(Yii::$app->request->post())) {
 					Yii::$app->response->format = Response::FORMAT_JSON;
 					if ($model->sendFeedback($this->mailTpl, $this->from, $this->to, $this->subject, $this->fields)) {
-						return [
-							'success' => '1',
-							'callback' => $this->jsCallback,
-						];
+						return ['success' => '1'];
 					} else {
 						return ['errors' => $model->errors];
 					}

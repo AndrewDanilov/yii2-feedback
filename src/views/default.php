@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $controller string */
+/* @var $options array */
 /* @var $model \andrewdanilov\feedback\FeedbackForm */
 /* @var $fields array */
 
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
 <div class="feedback-form">
 
-	<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => ['data-feedback-form' => '']]); ?>
+	<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options]); ?>
 
 	<?php
 	foreach ($fields as $name => $field) {
