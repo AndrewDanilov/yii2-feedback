@@ -134,12 +134,21 @@ In View add widget call:
     // controller id configured in 'controllerMap' section of your config
     'controller' => 'callback',
     // optional: instead of form displays button, which call floating form on click
-    'fancybox' => [
-        'button' => 'div', // optional: tag represents button (div, span, i, a, etc.)
-        'label' => 'Call me!', // optional: button name
-        'options' => ['class' => 'callback-btn'], // optional: options for yii Html::tag() helper
+    'lightbox' => [
+        // optional: tag represents button (div, span, i, a, etc.)
+        'button' => 'div',
+        // optional: button name
+        'label' => 'Call me!',
+        // optional: options for yii Html::tag() helper
+        'options' => ['class' => 'callback-btn'],
+        // optional: delay before lightbox form will be closed
+        'delay' => 2500,
+        // optional: close button temblate
+        'closeBtn' => '<a href="javascript:$.fancybox.close();" class="close-btn">x</a>',
     ],
     // optional: javascript code to execute after success submit happen
     'jsCallback' => "ga('send', 'event', 'my_form', 'submit'); yaCounter100500.reachGoal('my_goal');",
+    // optional: redirect visitor to page after submitting form
+    'redirect' => \yii\helpers\Url::to(['site/index']),
 ]) ?>
 ```

@@ -1,5 +1,17 @@
 $(function () {
 
+	var andrewdanilovFeedback = {
+		forms: [],
+		register: function (form_id, redirect, is_lightbox, delay) {
+			andrewdanilovFeedback.forms.push({
+				id: form_id,
+				redirect: redirect,
+				is_lightbox: is_lightbox,
+				delay: delay,
+			});
+		}
+	};
+
 	$.fancybox.defaults.afterClose = function() {
 		var form = this.$content.find('form');
 		form.siblings('.form-fail').hide();
@@ -7,74 +19,72 @@ $(function () {
 		form.trigger("reset");
 	};
 
-	//$.fancybox.defaults.btnTpl.smallBtn =
-	//	'<a href="javascript:$.fancybox.close();" class="close-btn">x</a>';
+	// catch events only on forms registered in andrewdanilovFeedback obj
+	andrewdanilovFeedback.forms.forEach(function (form_options) {
+		$('form#' + form_options.id).on('submit', function(e) {
+			e.preventDefault();
+			var form = $(this);
 
-	// catch only forms with data-feedback-form attr
-	$('form[data-feedback-form]').on('submit', function(e) {
+			var is_lightbox = form_options.is_lightbox;
+			var redirect = form_options.redirect;
+			var action = form.attr('action');
 
-		e.preventDefault();
-		var form = $(this);
+			var submit_btn = form.find('[type="submit"]');
+			if (submit_btn.hasClass('btn-disabled')) {
+				// if form in process - exiting
+				return;
+			}
+			submit_btn.addClass('btn-disabled');
 
-		var is_lightbox = form.parents('[data-lightbox]').length;
-		var redirect = form.attr('data-redirect');
-		var action = form.attr('action');
+			var formData = new FormData(form[0]);
+			var param = $('meta[name=csrf-param]').attr("content");
+			var token = $('meta[name=csrf-token]').attr("content");
+			if (param && token) {
+				formData.set(param, token);
+			}
+			$.ajax({
+				url: action,
+				type: 'POST',
+				dataType: 'json',
+				processData: false,
+				contentType: false,
+				data: formData
+			}).done(function(result) {
+				submit_btn.removeClass('btn-disabled');
 
-		var submit_btn = form.find('[type="submit"]');
-		if (submit_btn.hasClass('btn-disabled')) {
-			// if form in process - exiting
-			return;
-		}
-		submit_btn.addClass('btn-disabled');
-
-		var formData = new FormData(form[0]);
-		var param = $('meta[name=csrf-param]').attr("content");
-		var token = $('meta[name=csrf-token]').attr("content");
-		if (param && token) {
-			formData.set(param, token);
-		}
-		$.ajax({
-			url: action,
-			type: 'POST',
-			dataType: 'json',
-			processData: false,
-			contentType: false,
-			data: formData
-		}).done(function(result) {
-			submit_btn.removeClass('btn-disabled');
-
-			if (result && result.success) {
-				if (!redirect) {
-					form.siblings('.form-fail').hide();
-					form.siblings('.form-done').show();
+				if (result && result.success) {
+					if (!redirect) {
+						form.siblings('.form-fail').hide();
+						form.siblings('.form-done').show();
+						if (is_lightbox) {
+							setTimeout(function () {
+								$.fancybox.close();
+							}, form_options.delay);
+						} else {
+							form.hide();
+						}
+					}
+					// triggering submit event
+					$(document).trigger(form.id + '-submit');
+					// redirecting if it needs
+					if (redirect) {
+						document.location.href = redirect;
+						return true;
+					}
+				} else {
+					form.siblings('.form-fail').show();
 					if (is_lightbox) {
 						setTimeout(function () {
-							$.fancybox.close();
-						}, 4000);
-					} else {
-						form.hide();
+							form.siblings('.form-fail').hide();
+						}, form_options.delay);
 					}
 				}
-				// triggering submit event
-				$(document).trigger(form.id + '-submit');
-				// redirecting if it needs
-				if (redirect) {
-					document.location.href = redirect;
-					return true;
-				}
-			} else {
-				form.siblings('.form-fail').show();
-				if (is_lightbox) {
-					setTimeout(function () {
-						form.siblings('.form-fail').hide();
-					}, 4000);
-				}
-			}
 
-			// reset ReCaptcha
-			if (typeof(grecaptcha) !== 'undefined') {
-				grecaptcha.reset();
-			}
+				// reset ReCaptcha
+				if (typeof(grecaptcha) !== 'undefined') {
+					grecaptcha.reset();
+				}
+			});
 		});
 	});
 });

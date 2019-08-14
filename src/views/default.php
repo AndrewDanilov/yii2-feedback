@@ -11,68 +11,64 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<div class="feedback-form">
+<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options]); ?>
 
-	<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options]); ?>
+<?php
+foreach ($fields as $name => $field) {
 
-	<?php
-	foreach ($fields as $name => $field) {
-
-		$options = [];
-		if (isset($field['maxlength'])) {
-			$options['maxlength'] = $field['maxlength'];
-		}
-		if (isset($field['placeholder'])) {
-			$options['placepholder'] = $field['placepholder'];
-		}
-		if (isset($field['class'])) {
-			$options['class'] = $field['class'];
-		}
-
-		if (isset($field['default'])) {
-			$model->data[$name] = $field['default'];
-		}
-
-		switch ($field['type']) {
-			case 'text':
-				echo $form
-					->field($model, 'data[' . $name . ']')
-					->label($field['label'])
-					->textInput($options);
-				break;
-			case 'textarea':
-				echo $form
-					->field($model, 'data[' . $name . ']')
-					->label($field['label'])
-					->textarea($options);
-				break;
-			case 'radio':
-				$options['label'] = $field['label'];
-				echo $form
-					->field($model, 'data[' . $name . ']')
-					->radio($options);
-				break;
-			case 'checkbox':
-				$options['label'] = $field['label'];
-				echo $form
-					->field($model, 'data[' . $name . ']')
-					->checkbox($options);
-				break;
-			case 'select':
-				echo $form
-					->field($model, 'data[' . $name . ']')
-					->label($field['label'])
-					->dropDownList($field['items'], $options);
-				break;
-		}
-
+	$options = [];
+	if (isset($field['maxlength'])) {
+		$options['maxlength'] = $field['maxlength'];
 	}
-	?>
+	if (isset($field['placeholder'])) {
+		$options['placepholder'] = $field['placepholder'];
+	}
+	if (isset($field['class'])) {
+		$options['class'] = $field['class'];
+	}
 
-	<div class="form-group">
-		<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
-	</div>
+	if (isset($field['default'])) {
+		$model->data[$name] = $field['default'];
+	}
 
-	<?php ActiveForm::end(); ?>
+	switch ($field['type']) {
+		case 'text':
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->label($field['label'])
+				->textInput($options);
+			break;
+		case 'textarea':
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->label($field['label'])
+				->textarea($options);
+			break;
+		case 'radio':
+			$options['label'] = $field['label'];
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->radio($options);
+			break;
+		case 'checkbox':
+			$options['label'] = $field['label'];
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->checkbox($options);
+			break;
+		case 'select':
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->label($field['label'])
+				->dropDownList($field['items'], $options);
+			break;
+	}
 
+}
+?>
+
+<div class="form-group">
+	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
 </div>
+
+<?php ActiveForm::end(); ?>
