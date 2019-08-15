@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "yiisoft/yii2": "~2.0.0"
+        "yiisoft/yii2": "~2.0.0",
+        "andrewdanilov/fancybox": "dev-master"
     },
     "autoload": {
         "psr-4": {
