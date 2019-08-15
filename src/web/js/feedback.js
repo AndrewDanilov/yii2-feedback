@@ -1,16 +1,16 @@
-$(function () {
+var andrewdanilovFeedback = {
+	forms: [],
+	register: function (form_id, redirect, is_lightbox, delay) {
+		andrewdanilovFeedback.forms.push({
+			id: form_id,
+			redirect: redirect,
+			is_lightbox: is_lightbox,
+			delay: delay,
+		});
+	}
+};
 
-	var andrewdanilovFeedback = {
-		forms: [],
-		register: function (form_id, redirect, is_lightbox, delay) {
-			andrewdanilovFeedback.forms.push({
-				id: form_id,
-				redirect: redirect,
-				is_lightbox: is_lightbox,
-				delay: delay,
-			});
-		}
-	};
+$(function () {
 
 	$.fancybox.defaults.afterClose = function() {
 		var form = this.$content.find('form');
