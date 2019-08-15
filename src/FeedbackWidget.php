@@ -80,11 +80,11 @@ class FeedbackWidget extends Widget
 				$this->getView()->registerJs("$.fancybox.defaults.btnTpl.smallBtn = '" . $this->lightbox['closeBtn'] . "'");
 			}
 
-			$this->getView()->registerJs("andrewdanilovFeedback.register(" . $form_id . ", '" . $this->redirect . "', true, " . $this->lightbox['delay'] . ")");
+			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', true, " . $this->lightbox['delay'] . ")");
 
 		} else {
 
-			$this->getView()->registerJs("andrewdanilovFeedback.register(" . $form_id . ", '" . $this->redirect . "', false, false)");
+			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', false, false)");
 
 		}
 
