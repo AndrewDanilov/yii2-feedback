@@ -73,13 +73,13 @@ var andrewdanilovFeedback = {
 		form.find('.form-success').hide();
 	},
 	showErrors: function (form, errors) {
-		if (errors.length) {
+		if (typeof errors === 'object') {
 			for (var field in errors) {
 				if (errors.hasOwnProperty(field)) {
 					form.find('.field-data-' + field)
 						.addClass('has-error')
 						.find('.help-block')
-						.text(errors[field]);
+						.text(errors[field][0]);
 				}
 			}
 		}
