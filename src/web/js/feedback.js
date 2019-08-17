@@ -76,7 +76,7 @@ var andrewdanilovFeedback = {
 		if (errors.length) {
 			for (var field in errors) {
 				if (errors.hasOwnProperty(field)) {
-					$('#field-data-' + field)
+					form.find('.field-data-' + field)
 						.addClass('has-error')
 						.find('.help-block')
 						.text(errors[field]);
