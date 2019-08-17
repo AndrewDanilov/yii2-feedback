@@ -35,10 +35,25 @@ foreach ($fields as $name => $field) {
 
 	switch ($field['type']) {
 		case 'text':
+		case 'email':
+		case 'tel':
+		case 'numeric':
+			$options['type'] = $field['type'];
 			echo $form
 				->field($model, 'data[' . $name . ']')
 				->label($field['label'])
 				->textInput($options);
+			break;
+		case 'password':
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->label($field['label'])
+				->passwordInput($options);
+			break;
+		case 'hidden':
+			echo $form
+				->field($model, 'data[' . $name . ']')
+				->hiddenInput($options);
 			break;
 		case 'textarea':
 			echo $form
