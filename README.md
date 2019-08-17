@@ -150,7 +150,7 @@ In View add widget call:
     'jsCallback' => "ga('send', 'event', 'my_form', 'submit'); yaCounter100500.reachGoal('my_goal');",
     // optional: redirect visitor to page after submitting form
     'redirect' => \yii\helpers\Url::to(['site/index']),
-    // success form submit message
+    // optional: success form submit message
     'success_message' => 'Message sent. Please, wait for an answer.',
 ]) ?>
 ```
