@@ -73,6 +73,6 @@ foreach ($fields as $name => $field) {
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
 </div>
 
-<div class="form-success"><?= $success_message ?></div>
-
 <?php ActiveForm::end(); ?>
+
+<div class="form-success"><?= $success_message ?></div>

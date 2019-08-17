@@ -51,11 +51,6 @@ var andrewdanilovFeedback = {
 					}
 				} else {
 					self.showErrors(form, result['errors']);
-					if (is_lightbox) {
-						setTimeout(function () {
-							self.hideErrors(form);
-						}, delay);
-					}
 				}
 
 				// reset ReCaptcha
@@ -67,10 +62,10 @@ var andrewdanilovFeedback = {
 	},
 	showSuccess: function (form) {
 		andrewdanilovFeedback.hideErrors(form);
-		form.find('.form-success').show();
+		form.siblings('.form-success').show();
 	},
 	hideSuccess: function (form) {
-		form.find('.form-success').hide();
+		form.siblings('.form-success').hide();
 	},
 	showErrors: function (form, errors) {
 		if (typeof errors === 'object') {
