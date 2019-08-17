@@ -73,11 +73,22 @@ var andrewdanilovFeedback = {
 		form.find('.form-success').hide();
 	},
 	showErrors: function (form, errors) {
-		console.log(errors);
+		if (errors.length) {
+			for (var field in errors) {
+				if (errors.hasOwnProperty(field)) {
+					$('#field-data-' + field)
+						.addClass('has-error')
+						.find('.help-block')
+						.text(errors[field]);
+				}
+			}
+		}
 	},
 	hideErrors: function (form) {
-		form.find('.has-error').removeClass('has-error')
-			.find('.help-block').text('');
+		form.find('.has-error')
+			.removeClass('has-error')
+			.find('.help-block')
+			.text('');
 	}
 };
 

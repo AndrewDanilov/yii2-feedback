@@ -24,8 +24,9 @@ foreach ($fields as $name => $field) {
 	if (isset($field['placeholder'])) {
 		$options['placepholder'] = $field['placepholder'];
 	}
+	$options['class'] = 'form-control';
 	if (isset($field['class'])) {
-		$options['class'] = $field['class'];
+		$options['class'] .= ' ' .$field['class'];
 	}
 
 	if (isset($field['default'])) {
