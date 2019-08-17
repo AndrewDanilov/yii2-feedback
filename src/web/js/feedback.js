@@ -1,5 +1,6 @@
 var andrewdanilovFeedback = {
 	register: function (form_id, redirect, is_lightbox, delay) {
+		var self = andrewdanilovFeedback;
 		// catch events only on registered forms
 		$('form#' + form_id).on('submit', function(e) {
 			e.preventDefault();
@@ -32,7 +33,7 @@ var andrewdanilovFeedback = {
 
 				if (result && result.success) {
 					if (!redirect) {
-						this.showSuccess(form);
+						self.showSuccess(form);
 						if (is_lightbox) {
 							setTimeout(function () {
 								$.fancybox.close();
@@ -49,10 +50,10 @@ var andrewdanilovFeedback = {
 						return true;
 					}
 				} else {
-					this.showErrors(form, result['errors']);
+					self.showErrors(form, result['errors']);
 					if (is_lightbox) {
 						setTimeout(function () {
-							this.hideErrors(form);
+							self.hideErrors(form);
 						}, delay);
 					}
 				}
@@ -65,7 +66,7 @@ var andrewdanilovFeedback = {
 		});
 	},
 	showSuccess: function (form) {
-		this.hideErrors(form);
+		andrewdanilovFeedback.hideErrors(form);
 		form.find('.form-success').show();
 	},
 	hideSuccess: function (form) {
