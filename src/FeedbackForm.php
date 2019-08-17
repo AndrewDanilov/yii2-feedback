@@ -27,16 +27,6 @@ class FeedbackForm extends Model
 		return '';
 	}
 
-	public function init()
-	{
-		parent::init();
-	}
-
-	public function load($data, $formName = null)
-	{
-		return parent::load($data, $formName);
-	}
-
 	public function validateData($attribute, $value)
 	{
 		foreach ($this->fields as $field_name => $field) {
