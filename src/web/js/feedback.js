@@ -9,7 +9,7 @@ var andrewdanilovFeedback = {
 
 			var submit_btn = form.find('[type="submit"]');
 			if (submit_btn.hasClass('btn-disabled')) {
-				// if form in process - exiting
+				// if form in process - leaving
 				return;
 			}
 			submit_btn.addClass('btn-disabled');
@@ -32,8 +32,7 @@ var andrewdanilovFeedback = {
 
 				if (result && result.success) {
 					if (!redirect) {
-						form.siblings('.form-fail').hide();
-						form.siblings('.form-done').show();
+						this.showSuccess(form);
 						if (is_lightbox) {
 							setTimeout(function () {
 								$.fancybox.close();
@@ -50,10 +49,10 @@ var andrewdanilovFeedback = {
 						return true;
 					}
 				} else {
-					form.siblings('.form-fail').show();
+					this.showErrors(form, result['errors']);
 					if (is_lightbox) {
 						setTimeout(function () {
-							form.siblings('.form-fail').hide();
+							this.hideErrors(form);
 						}, delay);
 					}
 				}
@@ -64,16 +63,28 @@ var andrewdanilovFeedback = {
 				}
 			});
 		});
+	},
+	showSuccess: function (form) {
+		this.hideErrors(form);
+		form.find('.form-success').show();
+	},
+	hideSuccess: function (form) {
+		form.find('.form-success').hide();
+	},
+	showErrors: function (form, errors) {
+		console.log(errors);
+	},
+	hideErrors: function (form) {
+		form.find('.has-error').removeClass('has-error')
+			.find('.help-block').text('');
 	}
 };
 
 $(function () {
-
 	$.fancybox.defaults.afterClose = function() {
 		var form = this.$content.find('form');
-		form.siblings('.form-fail').hide();
-		form.siblings('.form-done').hide();
+		andrewdanilovFeedback.hideErrors();
+		andrewdanilovFeedback.hideSuccess();
 		form.trigger("reset");
 	};
-
 });

@@ -7,6 +7,7 @@ class FeedbackAsset extends AssetBundle
 {
 	public $sourcePath = '@andrewdanilov/feedback/web';
 	public $css = [
+		'css/feedback.css',
 	];
 	public $js = [
 		'js/feedback.js',

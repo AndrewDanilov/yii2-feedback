@@ -11,6 +11,7 @@ class FeedbackWidget extends Widget
 	public $lightbox;
 	public $jsCallback;
 	public $redirect;
+	public $success_message = 'Message sent.';
 
 	public function run()
 	{
@@ -41,6 +42,7 @@ class FeedbackWidget extends Widget
 			],
 			'model' => $model,
 			'fields' => $fields,
+			'success_message' => $this->success_message,
 		]);
 
 		if (isset($this->lightbox)) {

@@ -8,10 +8,11 @@ use yii\widgets\ActiveForm;
 /* @var $options array */
 /* @var $model \andrewdanilov\feedback\FeedbackForm */
 /* @var $fields array */
+/* @var $success_message string */
 
 ?>
 
-<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options]); ?>
+<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options, 'enableClientValidation'=>false]); ?>
 
 <?php
 foreach ($fields as $name => $field) {
@@ -70,5 +71,7 @@ foreach ($fields as $name => $field) {
 <div class="form-group">
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-success']) ?>
 </div>
+
+<div class="form-success"><?= $success_message ?></div>
 
 <?php ActiveForm::end(); ?>
