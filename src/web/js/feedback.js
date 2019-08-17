@@ -1,32 +1,10 @@
 var andrewdanilovFeedback = {
-	forms: [],
 	register: function (form_id, redirect, is_lightbox, delay) {
-		andrewdanilovFeedback.forms.push({
-			id: form_id,
-			redirect: redirect,
-			is_lightbox: is_lightbox,
-			delay: delay,
-		});
-	}
-};
-
-$(function () {
-
-	$.fancybox.defaults.afterClose = function() {
-		var form = this.$content.find('form');
-		form.siblings('.form-fail').hide();
-		form.siblings('.form-done').hide();
-		form.trigger("reset");
-	};
-
-	// catch events only on forms registered in andrewdanilovFeedback obj
-	andrewdanilovFeedback.forms.forEach(function (form_options) {
-		$('form#' + form_options.id).on('submit', function(e) {
+		// catch events only on registered forms
+		$('form#' + form_id).on('submit', function(e) {
 			e.preventDefault();
 			var form = $(this);
 
-			var is_lightbox = form_options.is_lightbox;
-			var redirect = form_options.redirect;
 			var action = form.attr('action');
 
 			var submit_btn = form.find('[type="submit"]');
@@ -59,7 +37,7 @@ $(function () {
 						if (is_lightbox) {
 							setTimeout(function () {
 								$.fancybox.close();
-							}, form_options.delay);
+							}, delay);
 						} else {
 							form.hide();
 						}
@@ -76,7 +54,7 @@ $(function () {
 					if (is_lightbox) {
 						setTimeout(function () {
 							form.siblings('.form-fail').hide();
-						}, form_options.delay);
+						}, delay);
 					}
 				}
 
@@ -86,5 +64,16 @@ $(function () {
 				}
 			});
 		});
-	});
+	}
+};
+
+$(function () {
+
+	$.fancybox.defaults.afterClose = function() {
+		var form = this.$content.find('form');
+		form.siblings('.form-fail').hide();
+		form.siblings('.form-done').hide();
+		form.trigger("reset");
+	};
+
 });
