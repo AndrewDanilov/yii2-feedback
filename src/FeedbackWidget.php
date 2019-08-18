@@ -11,7 +11,15 @@ class FeedbackWidget extends Widget
 	public $lightbox;
 	public $jsCallback;
 	public $redirect;
-	public $success_message = 'Message sent.';
+	public $success_message;
+
+	public function init()
+	{
+		parent::init();
+		if (empty($this->success_message)) {
+			$this->success_message = 'Message sent.';
+		}
+	}
 
 	public function run()
 	{
@@ -20,8 +28,8 @@ class FeedbackWidget extends Widget
 		} else {
 			return false;
 		}
-		if (isset($controller_conf['formTpl'])) {
-			$formTpl = $controller_conf['formTpl'];
+		if (isset($controller_conf['formView'])) {
+			$formView = $controller_conf['formView'];
 		} else {
 			return false;
 		}
@@ -35,7 +43,7 @@ class FeedbackWidget extends Widget
 		$widget_id = 'feedback-' . $this->id;
 		$form_id = $widget_id . '-form';
 
-		$out = $this->render($formTpl, [
+		$out = $this->render($formView, [
 			'controller' => $this->controller,
 			'options' => [
 				'id' => $form_id,
