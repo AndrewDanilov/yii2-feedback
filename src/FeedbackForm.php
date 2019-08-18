@@ -12,6 +12,11 @@ class FeedbackForm extends Model
 	public $fields = [];
 	public $data = [];
 
+	public $mailView;
+	public $from;
+	public $to;
+	public $subject;
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -42,16 +47,13 @@ class FeedbackForm extends Model
 	/**
 	 * Sends an email to the webmaster email address using the information collected by this model.
 	 *
-	 * @param $mailTpl string
 	 * @param $from array|string
 	 * @param $to array|string
 	 * @param $subject string
-	 * @param $fields array
 	 * @return boolean
 	 */
-	public function sendFeedback($mailTpl, $from, $to, $subject, $fields)
+	public function sendFeedback($from, $to, $subject)
 	{
-		$this->fields = $fields;
 		if ($this->validate()) {
 			$values = [];
 			foreach ($this->data as $key => $value) {
@@ -68,7 +70,7 @@ class FeedbackForm extends Model
 				}
 			}
 			$mailer = Yii::$app->mailer
-				->compose($mailTpl, ['values' => $values])
+				->compose($this->mailView, ['values' => $values])
 				->setFrom($from)
 				->setTo($to)
 				->setSubject($subject);
