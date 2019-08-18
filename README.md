@@ -50,8 +50,8 @@ return [
         ...
         'callback' => [
             'class' => 'andrewdanilov\feedback\FeedbackController',
-            'mailView' => '@app/mail/feedback/default', // optional
             'formView' => '@app/views/feedback/default', // optional
+            'mailView' => '@app/mail/feedback/default', // optional
             'from' => ['admin@example.com' => 'My Site'],
             'to' => ['admin@example.com', 'admin2@example.com'],
             'subject' => 'Mail from site', // optional
