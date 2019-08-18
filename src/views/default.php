@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $controller string */
+/* @var $route string */
 /* @var $options array */
 /* @var $model \andrewdanilov\feedback\FeedbackForm */
 /* @var $fields array */
@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<?php $form = ActiveForm::begin(['action' => [$controller . '/send'], 'options' => $options, 'enableClientValidation'=>false]); ?>
+<?php $form = ActiveForm::begin(['action' => [$route], 'options' => $options, 'enableClientValidation'=>false]); ?>
 
 <?php
 foreach ($fields as $name => $field) {
@@ -22,11 +22,11 @@ foreach ($fields as $name => $field) {
 		$options['maxlength'] = $field['maxlength'];
 	}
 	if (isset($field['placeholder'])) {
-		$options['placepholder'] = $field['placepholder'];
+		$options['placeholder'] = $field['placeholder'];
 	}
 	$options['class'] = 'form-control';
 	if (isset($field['class'])) {
-		$options['class'] .= ' ' .$field['class'];
+		$options['class'] .= ' ' . $field['class'];
 	}
 
 	if (isset($field['default'])) {

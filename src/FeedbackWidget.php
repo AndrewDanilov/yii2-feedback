@@ -2,8 +2,10 @@
 namespace andrewdanilov\feedback;
 
 use Yii;
+use yii\base\Action;
 use yii\base\Widget;
 use yii\helpers\Html;
+use yii\web\Controller;
 
 class FeedbackWidget extends Widget
 {
@@ -23,18 +25,20 @@ class FeedbackWidget extends Widget
 
 	public function run()
 	{
-		if ($this->controller && isset(Yii::$app->controllerMap[$this->controller])) {
-			$controller_conf = Yii::$app->controllerMap[$this->controller];
+		/* @var $controller FeedbackController */
+		/* @var $action Action */
+		if (!empty($this->controller) && ($_controller = Yii::$app->createController($this->controller . '/send'))) {
+			$controller = $_controller[0];
 		} else {
 			return false;
 		}
-		if (isset($controller_conf['formView'])) {
-			$formView = $controller_conf['formView'];
+		if (isset($controller->formView)) {
+			$formView = $controller->formView;
 		} else {
 			return false;
 		}
-		if (isset($controller_conf['fields'])) {
-			$fields = $controller_conf['fields'];
+		if (isset($controller->fields)) {
+			$fields = $controller->fields;
 		} else {
 			return false;
 		}
@@ -44,7 +48,7 @@ class FeedbackWidget extends Widget
 		$form_id = $widget_id . '-form';
 
 		$out = $this->render($formView, [
-			'controller' => $this->controller,
+			'route' => $controller->route,
 			'options' => [
 				'id' => $form_id,
 			],
