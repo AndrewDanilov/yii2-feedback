@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
 ?>
 
-<?php $form = ActiveForm::begin(['action' => [$route], 'options' => $options, 'enableClientValidation'=>false]); ?>
+<?php $form = ActiveForm::begin(['action' => [$route], 'options' => $options, 'enableClientValidation' => false]); ?>
 
 <?php
 foreach ($fields as $name => $field) {

@@ -26,10 +26,8 @@ class FeedbackWidget extends Widget
 	public function run()
 	{
 		/* @var $controller FeedbackController */
-		/* @var $action Action */
 		if (!empty($this->controller) && ($_controller = Yii::$app->createController($this->controller . '/send'))) {
 			$controller = $_controller[0];
-			$action = $_controller[1];
 		} else {
 			return false;
 		}
@@ -49,7 +47,7 @@ class FeedbackWidget extends Widget
 		$form_id = $widget_id . '-form';
 
 		$out = $this->render($formView, [
-			'route' => $controller->id . '/' . $action->id,
+			'route' => $controller->id . '/send',
 			'options' => [
 				'id' => $form_id,
 			],
