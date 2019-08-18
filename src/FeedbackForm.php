@@ -9,13 +9,10 @@ use yii\base\Model;
  */
 class FeedbackForm extends Model
 {
-	public $fields = [];
-	public $data = [];
-
 	public $mailView;
-	public $from;
-	public $to;
-	public $subject;
+	public $fields = [];
+
+	public $data = [];
 
 	/**
 	 * {@inheritdoc}
@@ -35,10 +32,10 @@ class FeedbackForm extends Model
 	public function validateData($attribute, $params)
 	{
 		foreach ($this->fields as $field_name => $field) {
-			if ($field['required'] && !$this->{$attribute}[$field_name]) {
+			if (!empty($field['required']) && !$this->{$attribute}[$field_name]) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
 			}
-			if ($field['max'] && $this->{$attribute}[$field_name] > $field['maxlength']) {
+			if (!empty($field['maxlength']) && $this->{$attribute}[$field_name] > $field['maxlength']) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
 			}
 		}

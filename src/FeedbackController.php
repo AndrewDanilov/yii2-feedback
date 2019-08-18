@@ -41,10 +41,10 @@ class FeedbackController extends Controller
 			if (Yii::$app->request->isPost) {
 
 				$model = new FeedbackForm();
+				$model->mailView = $this->mailView;
+				$model->fields = $this->fields;
 				if ($model->load(Yii::$app->request->post(), '')) {
 					Yii::$app->response->format = Response::FORMAT_JSON;
-					$model->mailView = $this->mailView;
-					$model->fields = $this->fields;
 					if ($model->sendFeedback($this->from, $this->to, $this->subject)) {
 						return ['success' => '1'];
 					} else {
