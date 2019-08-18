@@ -29,14 +29,12 @@ class FeedbackForm extends Model
 
 	public function validateData($attribute, $value)
 	{
-		Yii::debug($this->data, __METHOD__);
-		Yii::debug($value, __METHOD__);
 		foreach ($this->fields as $field_name => $field) {
-			if ($field['required'] && !$value[$field_name]) {
+			if ($field['required'] && !$this->$attribute[$field_name]) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
 			}
-			if ($field['max'] && $value[$field_name] > $field['max']) {
-				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['max'] . ' символов.');
+			if ($field['max'] && $this->$attribute[$field_name] > $field['maxlength']) {
+				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
 			}
 		}
 	}
