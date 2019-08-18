@@ -27,13 +27,13 @@ class FeedbackForm extends Model
 		return '';
 	}
 
-	public function validateData($attribute, $value)
+	public function validateData($attribute, $params)
 	{
 		foreach ($this->fields as $field_name => $field) {
-			if ($field['required'] && !$this->$attribute[$field_name]) {
+			if ($field['required'] && !$this->{$attribute}[$field_name]) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
 			}
-			if ($field['max'] && $this->$attribute[$field_name] > $field['maxlength']) {
+			if ($field['max'] && $this->{$attribute}[$field_name] > $field['maxlength']) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
 			}
 		}

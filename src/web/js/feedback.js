@@ -90,8 +90,8 @@ var andrewdanilovFeedback = {
 $(function () {
 	$.fancybox.defaults.afterClose = function() {
 		var form = this.$content.find('form');
-		andrewdanilovFeedback.hideErrors();
-		andrewdanilovFeedback.hideSuccess();
+		andrewdanilovFeedback.hideErrors(form);
+		andrewdanilovFeedback.hideSuccess(form);
 		form.trigger("reset");
 	};
 });
