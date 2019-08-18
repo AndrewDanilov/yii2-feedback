@@ -29,9 +29,8 @@ class FeedbackForm extends Model
 
 	public function validateData($attribute, $value)
 	{
-		Yii::info($this->fields, __METHOD__);
-		Yii::info($attribute, __METHOD__);
-		Yii::info($value, __METHOD__);
+		Yii::debug($this->data, __METHOD__);
+		Yii::debug($value, __METHOD__);
 		foreach ($this->fields as $field_name => $field) {
 			if ($field['required'] && !$value[$field_name]) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
