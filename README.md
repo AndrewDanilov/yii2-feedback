@@ -151,6 +151,11 @@ In View add widget call:
     // optional: redirect visitor to page after submitting form
     'redirect' => \yii\helpers\Url::to(['site/index']),
     // optional: success form submit message
-    'success_message' => 'Message sent. Please, wait for an answer.',
+    'successMessage' => 'Message sent. Please, wait for an answer.',
+    // optional: name and options for submit button
+    'submitButton' => [
+        'name' => 'Send msg', // optional
+        'options' => ['class' => 'form-submit-button'], // optional
+    ],
 ]) ?>
 ```

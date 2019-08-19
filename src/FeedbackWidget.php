@@ -2,10 +2,8 @@
 namespace andrewdanilov\feedback;
 
 use Yii;
-use yii\base\Action;
 use yii\base\Widget;
 use yii\helpers\Html;
-use yii\web\Controller;
 
 class FeedbackWidget extends Widget
 {
@@ -13,13 +11,20 @@ class FeedbackWidget extends Widget
 	public $lightbox;
 	public $jsCallback;
 	public $redirect;
-	public $success_message;
+	public $successMessage;
+	public $submitButton;
 
 	public function init()
 	{
 		parent::init();
-		if (empty($this->success_message)) {
-			$this->success_message = 'Message sent.';
+		if (empty($this->successMessage)) {
+			$this->successMessage = 'Message sent.';
+		}
+		if (empty($this->submitButton['name'])) {
+			$this->submitButton['name'] = 'Send';
+		}
+		if (empty($this->submitButton['options'])) {
+			$this->submitButton['options'] = ['class' => 'btn btn-success'];
 		}
 	}
 
@@ -53,7 +58,7 @@ class FeedbackWidget extends Widget
 			],
 			'model' => $model,
 			'fields' => $fields,
-			'success_message' => $this->success_message,
+			'successMessage' => $this->successMessage,
 		]);
 
 		if (isset($this->lightbox)) {
