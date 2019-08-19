@@ -69,7 +69,7 @@ var andrewdanilovFeedback = {
 	},
 	showErrors: function (form, errors) {
 		if (typeof errors === 'object') {
-			if (errors.length) {
+			if (Object.keys(errors).length) {
 				for (var field in errors) {
 					if (errors.hasOwnProperty(field)) {
 						form.find('.field-data-' + field)
