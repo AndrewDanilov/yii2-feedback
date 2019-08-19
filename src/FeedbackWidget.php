@@ -23,8 +23,8 @@ class FeedbackWidget extends Widget
 		if (empty($this->submitButton['name'])) {
 			$this->submitButton['name'] = 'Send';
 		}
-		if (empty($this->submitButton['options'])) {
-			$this->submitButton['options'] = ['class' => 'btn btn-success'];
+		if (empty($this->submitButton['options']['class'])) {
+			$this->submitButton['options']['class'] = 'btn btn-success';
 		}
 	}
 
@@ -59,6 +59,7 @@ class FeedbackWidget extends Widget
 			'model' => $model,
 			'fields' => $fields,
 			'successMessage' => $this->successMessage,
+			'submitButton' => $this->submitButton,
 		]);
 
 		if (isset($this->lightbox)) {
