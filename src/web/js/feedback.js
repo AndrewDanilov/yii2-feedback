@@ -43,7 +43,7 @@ var andrewdanilovFeedback = {
 						}
 					}
 					// triggering submit event
-					$(document).trigger(form.id + '-submit');
+					$(document).trigger(form.attr('id') + '-submit');
 					// redirecting if it needs
 					if (redirect) {
 						document.location.href = redirect;
