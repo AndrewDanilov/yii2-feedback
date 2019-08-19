@@ -75,7 +75,6 @@ class FeedbackForm extends Model
 			if ($mailer->send()) {
 				return true;
 			}
-			throw new SendEmailException();
 		}
 		return false;
 	}

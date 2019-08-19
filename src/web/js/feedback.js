@@ -69,13 +69,17 @@ var andrewdanilovFeedback = {
 	},
 	showErrors: function (form, errors) {
 		if (typeof errors === 'object') {
-			for (var field in errors) {
-				if (errors.hasOwnProperty(field)) {
-					form.find('.field-data-' + field)
-						.addClass('has-error')
-						.find('.help-block')
-						.text(errors[field][0]);
+			if (errors.length) {
+				for (var field in errors) {
+					if (errors.hasOwnProperty(field)) {
+						form.find('.field-data-' + field)
+							.addClass('has-error')
+							.find('.help-block')
+							.text(errors[field][0]);
+					}
 				}
+			} else {
+				alert('При отправке сообщения произошла неожиданная ошибка. Попробуйте позже.');
 			}
 		}
 	},
