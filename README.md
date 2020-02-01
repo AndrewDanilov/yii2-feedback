@@ -25,13 +25,13 @@ to the require section of your `composer.json` file.
 Usage
 -----
 
-In main config file add:
+In common/config/main_local.php config file setup mailer component:
 
 ```php
 return [
-    ...
+    // ...
     'components' => [
-        ...
+        // ...
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
             'useFileTransport' => false,
@@ -45,9 +45,16 @@ return [
             ],
         ],
     ],
-    ...
+];
+```
+
+In frontend/config/main.php add following lines to controllerMap section:
+
+```php
+return [
+    // ...
     'controllerMap' => [
-        ...
+        // ...
         'callback' => [
             'class' => 'andrewdanilov\feedback\FeedbackController',
             'formView' => '@app/views/feedback/default', // optional
@@ -113,13 +120,13 @@ If you use "'enableStrictParsing' => true" in your urlManager, than you need to 
 
 ```php
 return [
-    ...
+    // ...
     'urlManager' => [
-        ...
+        // ...
         'enableStrictParsing' => true,
         'rules' => [
-            ...
-            '<controller>/send' => '<controller>/send',
+            // ...
+            '<controller>/send' => '<controller>/send', // this needs to be add to represent ajax handler
         ],
     ],
 ];
