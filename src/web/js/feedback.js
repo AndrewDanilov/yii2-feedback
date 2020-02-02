@@ -99,3 +99,25 @@ $(function () {
 		form.trigger("reset");
 	};
 });
+
+$(function () {
+	$('[data-fancybox][data-src][data-extra]').click(function() {
+		var extra = $(this).attr('data-extra');
+		var widget = $(this).attr('data-src');
+
+		var form = $(widget + ' form');
+
+		var extra_data_el;
+
+		extra_data_el = form.find('input[name="extra"]');
+		if (extra_data_el.length) {
+			extra_data_el.remove();
+		}
+		$('<input />', {
+			'type': 'hidden',
+			'name': 'extra',
+			'value': extra,
+			appendTo: form
+		});
+	});
+});

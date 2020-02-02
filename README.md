@@ -140,9 +140,16 @@ In View add widget call:
 <?= \andrewdanilov\feedback\FeedbackWidget::widget([
     // controller id configured in 'controllerMap' section of your config
     'controller' => 'callback',
+    // optional: widget ID
+    'id' => 'mywidgetID',
     // optional: instead of form displays button, which call floating form on click
     'lightbox' => [
-        // optional: tag represents button (div, span, i, a, etc.)
+        // optional: tag represents button triggering form appearance (div, span, i, a, etc.)
+        // if not set or null, button will not be displayed, than you need to
+        // create it manually, i.e.:
+        // <a data-fancybox data-src="#feedback-mywidgetID" data-extra="extra message">Call me back!</a>
+        // in that case you can pass extra data to your form, and each triggering button
+        // can provide its own data to single form instance.
         'button' => 'div',
         // optional: button name
         'label' => 'Call me!',
@@ -150,7 +157,7 @@ In View add widget call:
         'options' => ['class' => 'callback-btn'],
         // optional: delay before lightbox form will be closed
         'delay' => 2500,
-        // optional: close button temblate
+        // optional: close button template
         'closeBtn' => '<a href="javascript:$.fancybox.close();" class="close-btn">x</a>',
     ],
     // optional: javascript code to execute after success submit happen

@@ -63,9 +63,6 @@ class FeedbackWidget extends Widget
 		]);
 
 		if (isset($this->lightbox)) {
-			if (!isset($this->lightbox['button'])) {
-				$this->lightbox['button'] = 'a';
-			}
 			if (!isset($this->lightbox['label'])) {
 				$this->lightbox['label'] = 'Feedback';
 			}
@@ -82,7 +79,11 @@ class FeedbackWidget extends Widget
 			$this->lightbox['options']['data-fancybox'] = '';
 			$this->lightbox['options']['data-src'] = '#' . $widget_id;
 
-			$button = Html::tag($this->lightbox['button'], $this->lightbox['label'], $this->lightbox['options']);
+			if (!isset($this->lightbox['button'])) {
+				$button = Html::tag($this->lightbox['button'], $this->lightbox['label'], $this->lightbox['options']);
+			} else {
+				$button = '';
+			}
 
 			$form_block = Html::tag('div', $out, [
 				'id' => $widget_id,
