@@ -151,7 +151,7 @@ In View add widget call:
         // optional: tag represents button triggering form appearance (div, span, i, a, etc.)
         // if not set or null, button will not be displayed, than you need to
         // create it manually, i.e.:
-        // <a data-fancybox data-src="#feedback-mywidgetID" data-extra="extra message">Call me back!</a>
+        // <a href="javascript:;" data-fancybox data-src="#feedback-mywidgetID" data-extra="extra message">Call me back!</a>
         // in that case you can pass extra data to your form, and each triggering button
         // can provide its own data to single form instance.
         'button' => 'div',
