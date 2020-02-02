@@ -10,6 +10,7 @@ use yii\base\Model;
 class FeedbackForm extends Model
 {
 	public $mailView;
+	public $mailLayout;
 	public $fields = [];
 
 	public $data = [];
@@ -66,7 +67,9 @@ class FeedbackForm extends Model
 					];
 				}
 			}
-			$mailer = Yii::$app->mailer
+			$mailer = Yii::$app->mailer;
+			$mailer->htmlLayout = $this->mailLayout;
+			$mailer
 				->compose($this->mailView, ['values' => $values])
 				->setFrom($from)
 				->setTo($to)

@@ -57,8 +57,12 @@ return [
         // ...
         'callback' => [
             'class' => 'andrewdanilov\feedback\FeedbackController',
-            'formView' => '@app/views/feedback/default', // optional
-            'mailView' => '@app/mail/feedback/default', // optional
+            // If you want you can use your own views for form and mail.
+            // Just copy views files from extension folder to your location
+            // and set formView, mailView and mailLayout paths here:
+            'formView' => '@frontend/views/feedback/default', // optional
+            'mailView' => '@frontend/mail/feedback/default', // optional
+            'mailLayout' => '@frontend/mail/feedback/layouts/html', // optional
             'from' => ['admin@example.com' => 'My Site'],
             'to' => ['admin@example.com', 'admin2@example.com'],
             'subject' => 'Mail from site', // optional

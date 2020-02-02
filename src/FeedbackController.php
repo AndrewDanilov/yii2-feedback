@@ -10,6 +10,7 @@ class FeedbackController extends Controller
 {
 	public $formView;
 	public $mailView;
+	public $mailLayout;
 	public $from = [];
 	public $to = [];
 	public $subject;
@@ -23,6 +24,9 @@ class FeedbackController extends Controller
 		}
 		if (empty($this->mailView)) {
 			$this->mailView = '@andrewdanilov/feedback/mail/default';
+		}
+		if (empty($this->mailLayout)) {
+			$this->mailLayout = '@andrewdanilov/feedback/mail/layouts/html';
 		}
 		if (empty($this->subject)) {
 			$this->subject = 'Mail from site';
@@ -42,6 +46,7 @@ class FeedbackController extends Controller
 
 				$model = new FeedbackForm();
 				$model->mailView = $this->mailView;
+				$model->mailLayout = $this->mailLayout;
 				$model->fields = $this->fields;
 				if ($model->load(Yii::$app->request->post(), '')) {
 					Yii::$app->response->format = Response::FORMAT_JSON;
