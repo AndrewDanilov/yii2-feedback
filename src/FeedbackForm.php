@@ -69,13 +69,12 @@ class FeedbackForm extends Model
 			}
 			$mailer = Yii::$app->mailer;
 			$mailer->htmlLayout = $this->mailLayout;
-			$mailer
-				->compose($this->mailView, ['values' => $values])
+			$message = $mailer->compose($this->mailView, ['values' => $values])
 				->setFrom($from)
 				->setTo($to)
 				->setSubject($subject);
 			// отправляем письмо
-			if ($mailer->send()) {
+			if ($message->send()) {
 				return true;
 			}
 		}
