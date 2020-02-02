@@ -175,5 +175,9 @@ In View add widget call:
         'name' => 'Send msg', // optional
         'options' => ['class' => 'form-submit-button'], // optional
     ],
+    // optional: form block options
+    'options' => [
+        'class' => 'form-block-class',
+    ],
 ]) ?>
 ```

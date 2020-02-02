@@ -13,6 +13,7 @@ class FeedbackWidget extends Widget
 	public $redirect;
 	public $successMessage;
 	public $submitButton;
+	public $options;
 
 	public function init()
 	{
@@ -25,6 +26,9 @@ class FeedbackWidget extends Widget
 		}
 		if (empty($this->submitButton['options']['class'])) {
 			$this->submitButton['options']['class'] = 'btn btn-success';
+		}
+		if (empty($this->options)) {
+			$this->options = [];
 		}
 	}
 
@@ -51,11 +55,12 @@ class FeedbackWidget extends Widget
 		$widget_id = 'feedback-' . $this->id;
 		$form_id = $widget_id . '-form';
 
+		$options = [
+			'id' => $form_id,
+		];
 		$out = $this->render($formView, [
 			'route' => $controller->id . '/send',
-			'options' => [
-				'id' => $form_id,
-			],
+			'options' => array_merge($options, $this->options),
 			'model' => $model,
 			'fields' => $fields,
 			'successMessage' => $this->successMessage,
