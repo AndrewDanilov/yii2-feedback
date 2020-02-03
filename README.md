@@ -135,6 +135,7 @@ return [
         'rules' => [
             // ...
             '<controller>/send' => '<controller>/send', // this needs to be add to represent ajax handler
+            '' => 'site/index',
         ],
     ],
 ];
