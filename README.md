@@ -73,9 +73,10 @@ return [
                     'required' => true, // optional
                     'label' => 'Name', // optional
                     'placeholder' => 'Enter your name', // optional
-                    'type' => 'text',
+                    'type' => 'text', // optional, default 'text'
                     'maxlength' => 255, // optional
                     'class' => 'field-name', // optional
+                    'style' => 'margin-bottom: 10px;', // optional
                 ],
                 'email' => [
                     'required' => true,
@@ -165,7 +166,9 @@ In View add widget call:
         // optional: delay before lightbox form will be closed
         'delay' => 2500,
         // optional: close button template
-        'closeBtn' => '<a href="javascript:$.fancybox.close();" class="close-btn">x</a>',
+        'closeBtn' => '<a href="javascript:$("[data-fancybox-close]").click();$.fancybox.close(true);" class="close-btn">x</a>',
+        // optional: lightbox window title
+        'title' => 'Call me back!',
     ],
     // optional: javascript code to execute after success submit happen
     'jsCallback' => "ga('send', 'event', 'my_form', 'submit'); yaCounter100500.reachGoal('my_goal');",

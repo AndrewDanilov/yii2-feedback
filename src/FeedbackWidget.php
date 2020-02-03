@@ -90,6 +90,10 @@ class FeedbackWidget extends Widget
 				$button = '';
 			}
 
+			if (isset($this->lightbox['title'])) {
+				$out = Html::tag('h2', $this->lightbox['title']) . $out;
+			}
+
 			$form_block = Html::tag('div', $out, [
 				'id' => $widget_id,
 			]);

@@ -34,8 +34,16 @@ foreach ($fields as $name => $field) {
 		$options['class'] .= ' ' . $field['class'];
 	}
 
+	if (isset($field['style'])) {
+		$options['style'] = $field['style'];
+	}
+
 	if (isset($field['default'])) {
 		$model->data[$name] = $field['default'];
+	}
+
+	if (!isset($field['type'])) {
+		$field['type'] = 'text';
 	}
 
 	switch ($field['type']) {
