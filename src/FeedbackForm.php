@@ -11,8 +11,9 @@ class FeedbackForm extends Model
 {
 	public $mailView;
 	public $mailLayout;
-	public $fields = [];
+	public $extraFieldLabel;
 
+	public $fields = [];
 	public $data = [];
 
 	/**
@@ -36,7 +37,7 @@ class FeedbackForm extends Model
 			if (!empty($field['required']) && !$this->{$attribute}[$field_name]) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
 			}
-			if (!empty($field['maxlength']) && $this->{$attribute}[$field_name] > $field['maxlength']) {
+			if (!empty($field['maxlength']) && mb_strlen($this->{$attribute}[$field_name]) > $field['maxlength']) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
 			}
 		}
@@ -66,6 +67,12 @@ class FeedbackForm extends Model
 						'value' => $value,
 					];
 				}
+			}
+			if (isset($this->data['extra'])) {
+				$values[] = [
+					'label' => $this->extraFieldLabel,
+					'value' => $this->data['extra'],
+				];
 			}
 			$mailer = Yii::$app->mailer;
 			$mailer->htmlLayout = $this->mailLayout;

@@ -63,6 +63,8 @@ return [
             'formView' => '@frontend/views/feedback/default', // optional
             'mailView' => '@frontend/mail/feedback/default', // optional
             'mailLayout' => '@frontend/mail/feedback/layouts/html', // optional
+            // label for extra field in mail template            
+            'extraFieldLabel' => 'Extra data', // optional
             'from' => ['admin@example.com' => 'My Site'],
             'to' => ['admin@example.com', 'admin2@example.com'],
             'subject' => 'Mail from site', // optional

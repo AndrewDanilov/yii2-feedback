@@ -36,7 +36,7 @@ var andrewdanilovFeedback = {
 						self.showSuccess(form);
 						if (is_lightbox) {
 							setTimeout(function () {
-								$.fancybox.close();
+								$.fancybox.close(true);
 							}, delay);
 						} else {
 							form.hide();
