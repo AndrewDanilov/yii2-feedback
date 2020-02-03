@@ -57,15 +57,17 @@ class FeedbackForm extends Model
 			$values = [];
 			foreach ($this->data as $key => $value) {
 				if (array_key_exists($key, $this->fields)) {
-					if (isset($this->fields[$key]['label'])) {
-						$label = $this->fields[$key]['label'];
-					} else {
-						$label = $key;
+					if (empty($this->fields[$key]['exclude'])) {
+						if (isset($this->fields[$key]['label'])) {
+							$label = $this->fields[$key]['label'];
+						} else {
+							$label = $key;
+						}
+						$values[] = [
+							'label' => $label,
+							'value' => $value,
+						];
 					}
-					$values[] = [
-						'label' => $label,
-						'value' => $value,
-					];
 				}
 			}
 			if (isset($this->data['extra'])) {

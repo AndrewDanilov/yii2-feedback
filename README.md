@@ -113,6 +113,7 @@ return [
                     'type' => 'checkbox',
                     'default' => 1,
                     'class' => 'field-agreement',
+                    'exclude' => true, // field will be excluded form mail
                 ],
             ],
         ],
