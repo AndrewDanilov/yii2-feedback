@@ -109,13 +109,13 @@ $(function () {
 
 		var extra_data_el;
 
-		extra_data_el = form.find('input[name="extra"]');
+		extra_data_el = form.find('input[name="data[extra]"]');
 		if (extra_data_el.length) {
 			extra_data_el.remove();
 		}
 		$('<input />', {
 			'type': 'hidden',
-			'name': 'extra',
+			'name': 'data[extra]',
 			'value': extra,
 			appendTo: form
 		});
