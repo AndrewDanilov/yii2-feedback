@@ -36,6 +36,7 @@ var andrewdanilovFeedback = {
 						self.showSuccess(form);
 						if (is_lightbox) {
 							setTimeout(function () {
+								$('[data-fancybox-close]').click();
 								$.fancybox.close(true);
 							}, delay);
 						} else {
