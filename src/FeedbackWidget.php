@@ -106,19 +106,19 @@ class FeedbackWidget extends Widget
 
 			if (isset($this->lightbox['closeBtn'])) {
 				// todo: replace $.fancybox.defaults to specific form option
-				$this->getView()->registerJs("$.fancybox.defaults.btnTpl.smallBtn = '" . $this->lightbox['closeBtn'] . "'");
+				$this->getView()->registerJs("$.fancybox.defaults.btnTpl.smallBtn = '" . $this->lightbox['closeBtn'] . "';");
 			}
 
-			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', true, " . $this->lightbox['delay'] . ")");
+			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', true, " . $this->lightbox['delay'] . ");");
 
 		} else {
 
-			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', false, false)");
+			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', false, false);");
 
 		}
 
 		if ($this->jsCallback) {
-			$this->getView()->registerJs("$(document).on('" . $widget_id . '-form-submit' . "', function(){" . $this->jsCallback . "})");
+			$this->getView()->registerJs("$(document).on('" . $widget_id . '-form-submit' . "', function(){" . $this->jsCallback . "});");
 		}
 
 		FeedbackAsset::register($this->getView());
