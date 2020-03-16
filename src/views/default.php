@@ -29,7 +29,11 @@ foreach ($fields as $name => $field) {
 		$options['required'] = '';
 	}
 
-	$options['class'] = 'form-control';
+	if (!in_array($field['type'], ['hidden', 'radio', 'checkbox'])) {
+		$options['class'] = 'form-control';
+	} else {
+		$options['class'] = '';
+	}
 	if (isset($field['class'])) {
 		$options['class'] .= ' ' . $field['class'];
 	}
