@@ -58,7 +58,8 @@ class FeedbackWidget extends Widget
 		$options = [
 			'id' => $form_id,
 		];
-		$out = $this->render($formView, [
+
+		$form = $this->render($formView, [
 			'route' => $controller->id . '/send',
 			'options' => array_merge($options, $this->options),
 			'model' => $model,
@@ -84,17 +85,19 @@ class FeedbackWidget extends Widget
 			$this->lightbox['options']['data-fancybox'] = '';
 			$this->lightbox['options']['data-src'] = '#' . $widget_id;
 
-			if (!isset($this->lightbox['button'])) {
+			if (isset($this->lightbox['button'])) {
 				$button = Html::tag($this->lightbox['button'], $this->lightbox['label'], $this->lightbox['options']);
 			} else {
 				$button = '';
 			}
 
 			if (isset($this->lightbox['title'])) {
-				$out = Html::tag('h2', $this->lightbox['title']) . $out;
+				$title = Html::tag('h2', $this->lightbox['title']);
+			} else {
+				$title = '';
 			}
 
-			$form_block = Html::tag('div', $out, [
+			$form_block = Html::tag('div', $title . $form, [
 				'id' => $widget_id,
 			]);
 
@@ -112,6 +115,8 @@ class FeedbackWidget extends Widget
 			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', true, " . $this->lightbox['delay'] . ");");
 
 		} else {
+
+			$out = $form;
 
 			$this->getView()->registerJs("andrewdanilovFeedback.register('" . $form_id . "', '" . $this->redirect . "', false, false);");
 
