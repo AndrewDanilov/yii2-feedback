@@ -98,6 +98,7 @@ $(function () {
 		andrewdanilovFeedback.hideErrors(form);
 		andrewdanilovFeedback.hideSuccess(form);
 		form.trigger("reset");
+		form.find('[name="data[extra]"]').remove();
 	};
 });
 
