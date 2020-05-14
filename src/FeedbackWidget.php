@@ -60,7 +60,7 @@ class FeedbackWidget extends Widget
 		];
 
 		$form = $this->render($formView, [
-			'route' => $controller->id . '/send',
+			'route' => '/' . $controller->id . '/send',
 			'options' => array_merge($options, $this->options),
 			'model' => $model,
 			'fields' => $fields,
