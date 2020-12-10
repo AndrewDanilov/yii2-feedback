@@ -78,14 +78,14 @@ class FeedbackWidget extends Widget
 			if (!isset($this->lightbox['options'])) {
 				$this->lightbox['options'] = [];
 			}
-			if ($this->lightbox['button'] === 'a') {
-				$this->lightbox['options']['href'] = 'javascript:;';
-			}
 
 			$this->lightbox['options']['data-fancybox'] = '';
 			$this->lightbox['options']['data-src'] = '#' . $widget_id;
 
 			if (isset($this->lightbox['button'])) {
+				if ($this->lightbox['button'] === 'a') {
+					$this->lightbox['options']['href'] = 'javascript:;';
+				}
 				$button = Html::tag($this->lightbox['button'], $this->lightbox['label'], $this->lightbox['options']);
 			} else {
 				$button = '';
