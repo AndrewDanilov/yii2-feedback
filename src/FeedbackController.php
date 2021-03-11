@@ -35,6 +35,17 @@ class FeedbackController extends Controller
 		if (empty($this->subject)) {
 			$this->subject = 'Mail from site';
 		}
+		foreach ($this->fields as $key => $field) {
+			if (!is_array($field)) {
+				// convert simple elements to array-notation
+				$this->fields[$field] = ['type' => 'text'];
+				// remove old element
+				unset($this->fields[$key]);
+			} elseif (empty($this->fields[$key]['type'])) {
+				// type key must exist, set it to default if not
+				$this->fields[$key]['type'] = 'text';
+			}
+		}
 	}
 
 	/**

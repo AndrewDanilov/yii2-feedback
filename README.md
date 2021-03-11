@@ -19,7 +19,7 @@ or add
 "andrewdanilov/yii2-feedback": "~1.0.0"
 ```
 
-to the require section of your `composer.json` file.
+to the `require` section of your `composer.json` file.
 
 
 Usage
@@ -48,7 +48,7 @@ return [
 ];
 ```
 
-In frontend/config/main.php add following lines to controllerMap section:
+In `frontend/config/main.php` add following lines to controllerMap section:
 
 ```php
 return [
@@ -78,6 +78,7 @@ return [
                     'class' => 'field-name', // optional
                     'style' => 'margin-bottom: 10px;', // optional
                 ],
+                'address', // simple notation without config array
                 'email' => [
                     'required' => true,
                     'label' => 'Email',
@@ -124,7 +125,7 @@ return [
 
 You can add as many controller mappings as you want. Each controller mapping represents one feedback form instance.
 
-If you use "'enableStrictParsing' => true" in your urlManager, than you need to add rule:
+If you use "'enableStrictParsing' => true" in your urlManager, then you need to add rule:
 
 ```php
 return [
@@ -141,7 +142,7 @@ return [
 ];
 ```
 
-Instead of \<controller\> you can use particular controller id's defined in 'controllerMap'.
+Instead of \<controller\> you can use particular controller ids defined in 'controllerMap'.
 
 In View add widget call:
 
@@ -172,7 +173,7 @@ In View add widget call:
         'title' => 'Call me back!',
     ],
     // optional: javascript code to execute after success submit happen
-    'jsCallback' => "ga('send', 'event', 'my_form', 'submit'); yaCounter100500.reachGoal('my_goal');",
+    'jsCallback' => 'ga("send", "event", "my_form", "submit"); yaCounter100500.reachGoal("my_goal");',
     // optional: redirect visitor to page after submitting form
     'redirect' => \yii\helpers\Url::to(['site/index']),
     // optional: success form submit message
@@ -187,4 +188,68 @@ In View add widget call:
         'class' => 'form-block-class',
     ],
 ]) ?>
+```
+
+Simple example
+--------------
+
+Controller map in `frontend/config/main.php`
+
+```php
+return [
+    // ...
+    'controllerMap' => [
+        // ...
+        'callback' => [
+            'class' => 'andrewdanilov\feedback\FeedbackController',
+            'formView' => '@frontend/views/feedback/default',
+            'from' => ['admin@example.com' => 'My Site'],
+            'to' => ['admin@example.com', 'admin2@example.com'],
+            'subject' => 'Mail from site',
+            'fields' => [
+                'name',
+                'email',
+                'phone',
+                'message',
+            ],
+        ],
+    ],
+];
+```
+
+Widget call:
+
+```php
+<?= \andrewdanilov\feedback\FeedbackWidget::widget([
+    'controller' => 'callback',
+    'jsCallback' => '$(".callback-success-message").show();',
+]) ?>
+```
+
+Form view `frontend/views/feedback/default.php`
+
+```php
+<?php
+
+/* @var $this yii\web\View */
+/* @var $route string */
+/* @var $options array */
+/* @var $model \andrewdanilov\feedback\FeedbackForm */
+/* @var $fields array */
+/* @var $successMessage string */
+/* @var $submitButton array */
+
+?>
+
+<form action="<?= $route ?>" id="<?= $options['id'] ?>">
+	<input type="hidden" name="<?= \Yii::$app->request->csrfParam ?>" value="<?= \Yii::$app->request->csrfToken ?>">
+	<input type="text" name="data[name]">
+	<input type="text" name="data[email]">
+	<input type="text" name="data[phone]">
+	<textarea name="data[message]"></textarea>
+	<input type="submit" value="Send">
+</form>
+<div class="callback-success-message">
+	<div>Thank you!</div>
+</div>
 ```

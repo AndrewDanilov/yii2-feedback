@@ -46,10 +46,6 @@ foreach ($fields as $name => $field) {
 		$model->data[$name] = $field['default'];
 	}
 
-	if (!isset($field['type'])) {
-		$field['type'] = 'text';
-	}
-
 	switch ($field['type']) {
 		case 'text':
 		case 'email':
