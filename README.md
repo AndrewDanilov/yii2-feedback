@@ -85,7 +85,8 @@ return [
                     'placeholder' => 'Enter your e-mail',
                     'type' => 'email',
                     'class' => 'field-email',
-                ],
+                    'validator' => ['MyValidatorClass', 'myEmailValidator'], // optional, validator as an anonymous function, a function name as a string, or a valid PHP callback array
+                ],  
                 'country' => [
                     'label' => 'Select country',
                     'type' => 'select',
@@ -124,6 +125,40 @@ return [
 ```
 
 You can add as many controller mappings as you want. Each controller mapping represents one feedback form instance.
+
+You can use your own validators for field values. You just need to define 'validator' property of field defintion (see config above).
+For example, you can use php callable array:
+
+```
+'field_name' => [
+    //...
+    'validator' => ['frontend\components\validators\MyValidatorClass', 'myEmailValidator'],
+];
+```
+
+Then you need to create method `myEmailValidator` within class `MyValidatorClass`:
+
+```php
+<?php
+namespace frontend\components\validators;
+
+class MyValidatorClass
+{
+    // method accepts three parameters: first is validating field name,
+    // second - its value, third - all form values in case if you need
+    // to check some other fields to correctly validate current field
+    public static function myEmailValidator($field_name, $field_value, $fields_values)
+    {
+        if (!preg_match('~@~', $field_value)) {
+            // if it is not ok, return an arror
+            return [
+                'error' => 'Email is incorrect',
+            ];
+        }
+        return true; // if all is ok - return boolean true;
+    }
+}
+```
 
 If you use "'enableStrictParsing' => true" in your urlManager, then you need to add rule:
 
@@ -242,14 +277,14 @@ Form view `frontend/views/feedback/default.php`
 ?>
 
 <form action="<?= $route ?>" id="<?= $options['id'] ?>">
-	<input type="hidden" name="<?= \Yii::$app->request->csrfParam ?>" value="<?= \Yii::$app->request->csrfToken ?>">
-	<input type="text" name="data[name]">
-	<input type="text" name="data[email]">
-	<input type="text" name="data[phone]">
-	<textarea name="data[message]"></textarea>
-	<input type="submit" value="Send">
+    <input type="hidden" name="<?= \Yii::$app->request->csrfParam ?>" value="<?= \Yii::$app->request->csrfToken ?>">
+    <input type="text" name="data[name]">
+    <input type="text" name="data[email]">
+    <input type="text" name="data[phone]">
+    <textarea name="data[message]"></textarea>
+    <input type="submit" value="Send">
 </form>
 <div class="callback-success-message">
-	<div>Thank you!</div>
+    <div>Thank you!</div>
 </div>
 ```

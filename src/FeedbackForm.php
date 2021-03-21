@@ -40,6 +40,16 @@ class FeedbackForm extends Model
 			if (!empty($field['maxlength']) && mb_strlen($this->{$attribute}[$field_name]) > $field['maxlength']) {
 				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
 			}
+			if (!empty($field['validator']) && is_callable($field['validator'])) {
+				$result = call_user_func($field['validator'], $field_name, $this->{$attribute}[$field_name], $this->{$attribute});
+				if ($result !== true) {
+					if (!empty($result['error'])) {
+						$this->addError($field_name, $result['error']);
+					} else {
+						$this->addError($field_name, 'Поле "' . $field['label'] . '" содержит ошибку.');
+					}
+				}
+			}
 		}
 	}
 
