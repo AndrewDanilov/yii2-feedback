@@ -85,7 +85,7 @@ return [
                     'placeholder' => 'Enter your e-mail',
                     'type' => 'email',
                     'class' => 'field-email',
-                    'validator' => ['MyValidatorClass', 'myEmailValidator'], // optional, validator as an anonymous function, a function name as a string, or a valid PHP callback array
+                    'validator' => ['MyValidatorClass', 'myEmailValidator'], // optional, validator as an anonymous function, a function name as a string, or a valid PHP callable array
                 ],  
                 'country' => [
                     'label' => 'Select country',
