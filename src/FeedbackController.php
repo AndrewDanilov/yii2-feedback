@@ -38,12 +38,18 @@ class FeedbackController extends Controller
 		foreach ($this->fields as $key => $field) {
 			if (!is_array($field)) {
 				// convert simple elements to array-notation
-				$this->fields[$field] = ['type' => 'text'];
+				$this->fields[$field] = ['type' => 'text', 'label' => mb_strtoupper($field)];
 				// remove old element
 				unset($this->fields[$key]);
-			} elseif (empty($this->fields[$key]['type'])) {
-				// type key must exist, set it to default if not
-				$this->fields[$key]['type'] = 'text';
+			} else {
+				if (empty($this->fields[$key]['type'])) {
+					// type key must exist, set it to default if not
+					$this->fields[$key]['type'] = 'text';
+				}
+				if (empty($this->fields[$key]['label'])) {
+					// label key must exist, set it to default if not
+					$this->fields[$key]['label'] = mb_strtoupper($key);
+				}
 			}
 		}
 	}
