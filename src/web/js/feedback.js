@@ -75,7 +75,7 @@ var andrewdanilovFeedback = {
 			if (Object.keys(errors).length) {
 				for (var field in errors) {
 					if (errors.hasOwnProperty(field)) {
-						form.find('name=data[' + field + ']')
+						form.find('[name="data[' + field + ']"]')
 							.addClass(andrewdanilovFeedback.error_field_class)
 							.parent()
 							.addClass(andrewdanilovFeedback.error_field_class)
