@@ -1,4 +1,6 @@
 var andrewdanilovFeedback = {
+	error_field_class: 'has-error',
+	error_field_alert_element_class: 'help-block',
 	register: function (form_id, redirect, is_lightbox, delay) {
 		var self = andrewdanilovFeedback;
 		// catch events only on registered forms
@@ -73,9 +75,11 @@ var andrewdanilovFeedback = {
 			if (Object.keys(errors).length) {
 				for (var field in errors) {
 					if (errors.hasOwnProperty(field)) {
-						form.find('.field-data-' + field)
-							.addClass('has-error')
-							.find('.help-block')
+						form.find('name=data[' + field + ']')
+							.addClass(andrewdanilovFeedback.error_field_class)
+							.parent()
+							.addClass(andrewdanilovFeedback.error_field_class)
+							.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
 							.text(errors[field][0]);
 					}
 				}
@@ -85,9 +89,9 @@ var andrewdanilovFeedback = {
 		}
 	},
 	hideErrors: function (form) {
-		form.find('.has-error')
-			.removeClass('has-error')
-			.find('.help-block')
+		form.find('.' + andrewdanilovFeedback.error_field_class)
+			.removeClass(andrewdanilovFeedback.error_field_class)
+			.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
 			.text('');
 	}
 };

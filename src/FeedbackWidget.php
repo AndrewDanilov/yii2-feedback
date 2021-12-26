@@ -13,6 +13,8 @@ class FeedbackWidget extends Widget
 	public $redirect;
 	public $successMessage;
 	public $submitButton;
+	public $errorFieldClass;
+	public $errorFieldAlertElementClass;
 	public $options;
 
 	public function init()
@@ -122,6 +124,12 @@ class FeedbackWidget extends Widget
 
 		}
 
+		if ($this->errorFieldClass) {
+			$this->getView()->registerJs("andrewdanilovFeedback.error_field_class = '" . $this->errorFieldClass . "'");
+		}
+		if ($this->errorFieldAlertElementClass) {
+			$this->getView()->registerJs("andrewdanilovFeedback.error_field_alert_element_class = '" . $this->errorFieldAlertElementClass . "'");
+		}
 		if ($this->jsCallback) {
 			$this->getView()->registerJs("$(document).on('" . $widget_id . '-form-submit' . "', function(){" . $this->jsCallback . "});");
 		}

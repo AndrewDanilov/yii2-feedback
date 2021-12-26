@@ -118,7 +118,7 @@ return [
                     'type' => 'checkbox',
                     'default' => 1,
                     'class' => 'field-agreement',
-                    'exclude' => true, // field will be excluded form mail
+                    'exclude' => true, // field will be excluded from mail
                 ],
             ],
         ],
@@ -220,6 +220,10 @@ In View add widget call:
         'name' => 'Send msg', // optional
         'options' => ['class' => 'form-submit-button'], // optional
     ],
+    // optional: class to be added to input element and its parent in case an error, default is 'has-errors'
+    'errorFieldClass' => 'error',
+    // optional: class of element containing error message, default is 'help-block'
+    'errorFieldAlertElementClass' => 'alert',
     // optional: form block options
     'options' => [
         'class' => 'form-block-class',
