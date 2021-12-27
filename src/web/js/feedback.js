@@ -61,6 +61,9 @@ var andrewdanilovFeedback = {
 					grecaptcha.reset();
 				}
 			});
+		}).find('[name="data[' + field + ']"]').focus(function () {
+			// hide field error on focus
+			andrewdanilovFeedback.hideError($(this));
 		});
 	},
 	showSuccess: function (form) {
@@ -71,6 +74,7 @@ var andrewdanilovFeedback = {
 		form.siblings('.form-success').hide();
 	},
 	showErrors: function (form, errors) {
+		andrewdanilovFeedback.hideErrors(form);
 		if (typeof errors === 'object') {
 			if (Object.keys(errors).length) {
 				for (var field in errors) {
@@ -90,6 +94,13 @@ var andrewdanilovFeedback = {
 	},
 	hideErrors: function (form) {
 		form.find('.' + andrewdanilovFeedback.error_field_class)
+			.removeClass(andrewdanilovFeedback.error_field_class)
+			.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
+			.text('');
+	},
+	hideError: function (field) {
+		el.removeClass(andrewdanilovFeedback.error_field_class)
+			.parent()
 			.removeClass(andrewdanilovFeedback.error_field_class)
 			.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
 			.text('');
