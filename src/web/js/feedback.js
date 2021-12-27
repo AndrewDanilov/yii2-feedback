@@ -99,7 +99,7 @@ var andrewdanilovFeedback = {
 			.text('');
 	},
 	hideError: function (field) {
-		el.removeClass(andrewdanilovFeedback.error_field_class)
+		field.removeClass(andrewdanilovFeedback.error_field_class)
 			.parent()
 			.removeClass(andrewdanilovFeedback.error_field_class)
 			.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
