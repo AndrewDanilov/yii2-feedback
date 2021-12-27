@@ -151,11 +151,14 @@ class MyValidatorClass
     // to check some other fields to correctly validate current field
     public static function myEmailValidator($field_name, $field_value, $fields_values)
     {
-        if (!preg_match('~@~', $field_value)) {
+        // check field only if it is filled
+        if ($field_value && !filter_var($field_value, FILTER_VALIDATE_EMAIL)) {
             // if it is not ok, return an arror
             return [
                 'error' => 'Email is incorrect',
             ];
+            // or you can just return boolean false
+            //return false;
         }
         return true; // if all is ok - return boolean true;
     }
