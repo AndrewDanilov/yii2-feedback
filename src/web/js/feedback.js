@@ -61,7 +61,7 @@ var andrewdanilovFeedback = {
 					grecaptcha.reset();
 				}
 			});
-		}).find('[name="data[' + field + ']"]').focus(function () {
+		}).find('[name^="data["]').focus(function () {
 			// hide field error on focus
 			andrewdanilovFeedback.hideError($(this));
 		});
