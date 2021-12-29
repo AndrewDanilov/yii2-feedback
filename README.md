@@ -79,6 +79,11 @@ return [
                     'maxlength' => 255, // optional
                     'class' => 'field-name', // optional
                     'style' => 'margin-bottom: 10px;', // optional
+                    'errors' => [ // optional, default values is:
+                        'required' => 'Field "{label}" is required.', // if requred field is empty
+                        'maxlength' => 'Field "{label}" length of {maxlength} exeeded.', // if field length exeeded
+                        'error' => 'Field "{label}" is incorrect.', // if validator returns false or empty error string
+                    ],
                 ],
                 'address', // simple notation without config array
                 'email' => [

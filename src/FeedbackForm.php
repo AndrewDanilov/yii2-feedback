@@ -35,10 +35,15 @@ class FeedbackForm extends Model
 	{
 		foreach ($this->fields as $field_name => $field) {
 			if (!empty($field['required']) && !$this->{$attribute}[$field_name]) {
-				$this->addError($field_name, 'Поле "' . $field['label'] . '" обязательно для заполнения.');
+				$error = $field['errors']['required'];
+				$error = str_replace('{label}', $field['label'], $error);
+				$this->addError($field_name, $error);
 			}
 			if (!empty($field['maxlength']) && mb_strlen($this->{$attribute}[$field_name]) > $field['maxlength']) {
-				$this->addError($field_name, 'Поле "' . $field['label'] . '" не может быть длиннее ' . $field['maxlength'] . ' символов.');
+				$error = $field['errors']['maxlength'];
+				$error = str_replace('{label}', $field['label'], $error);
+				$error = str_replace('{maxlength}', $field['maxlength'], $error);
+				$this->addError($field_name, $error);
 			}
 			if (!empty($field['validator']) && is_callable($field['validator'])) {
 				$result = call_user_func($field['validator'], $field_name, $this->{$attribute}[$field_name], $this->{$attribute});
@@ -46,7 +51,9 @@ class FeedbackForm extends Model
 					if (!empty($result['error'])) {
 						$this->addError($field_name, $result['error']);
 					} else {
-						$this->addError($field_name, 'Поле "' . $field['label'] . '" содержит ошибку.');
+						$error = $field['errors']['error'];
+						$error = str_replace('{label}', $field['label'], $error);
+						$this->addError($field_name, $error);
 					}
 				}
 			}

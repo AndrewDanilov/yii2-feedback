@@ -50,6 +50,16 @@ class FeedbackController extends Controller
 					// label key must exist, set it to default if not
 					$this->fields[$key]['label'] = mb_strtoupper($key);
 				}
+				// set default error templates
+				if (empty($this->fields[$key]['errors']['required'])) {
+					$this->fields[$key]['errors']['required'] = 'Field "{label}" is required.';
+				}
+				if (empty($this->fields[$key]['errors']['maxlength'])) {
+					$this->fields[$key]['errors']['maxlength'] = 'Field "{label}" length of {maxlength} exeeded.';
+				}
+				if (empty($this->fields[$key]['errors']['error'])) {
+					$this->fields[$key]['errors']['error'] = 'Field "{label}" is incorrect.';
+				}
 			}
 		}
 	}
