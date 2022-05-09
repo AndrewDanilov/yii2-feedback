@@ -2,7 +2,7 @@
     "name": "andrewdanilov/yii2-feedback",
     "description": "Feedback and callback forms",
     "type": "yii2-extension",
-    "keywords": ["yii2","extension","feedback","callback","form"],
+    "keywords": ["yii2","extension","feedback","callback","form","validator","fileupload","upload","file","templates"],
     "license": "MIT",
     "authors": [
         {

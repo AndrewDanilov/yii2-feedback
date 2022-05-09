@@ -28,6 +28,9 @@ foreach ($fields as $name => $field) {
 	if (!empty($field['required'])) {
 		$options['required'] = '';
 	}
+	if (!empty($field['multiple'])) {
+		$options['multiple'] = '';
+	}
 
 	if (!in_array($field['type'], ['hidden', 'radio', 'checkbox'])) {
 		$options['class'] = 'form-control';
@@ -53,6 +56,7 @@ foreach ($fields as $name => $field) {
 		case 'numeric':
 			$options['type'] = $field['type'];
 			echo $form
+				// placing fields variables into an array "data"
 				->field($model, 'data[' . $name . ']')
 				->label($field['label'])
 				->textInput($options);
@@ -91,6 +95,18 @@ foreach ($fields as $name => $field) {
 				->field($model, 'data[' . $name . ']')
 				->label($field['label'])
 				->dropDownList($field['items'], $options);
+			break;
+		case 'file':
+			if (isset($options['multiple'])) {
+				// if multiple we need to accept array
+                $name .= '[]';
+			}
+			echo $form
+				// we can't place files variables into an array "data", because $_FILES is not associative array
+				// but numeric, so we use direct variable name in attribute
+				->field($model, $name)
+                ->label($field['label'])
+				->fileInput($options);
 			break;
 	}
 

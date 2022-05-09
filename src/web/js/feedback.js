@@ -79,12 +79,20 @@ var andrewdanilovFeedback = {
 			if (Object.keys(errors).length) {
 				for (var field in errors) {
 					if (errors.hasOwnProperty(field)) {
-						form.find('[name="data[' + field + ']"]')
+						var error_text = 'Error';
+						if (field in errors && errors[field].length) {
+							error_text = errors[field][0];
+						}
+						var field_input = form.find('[name="data[' + field + ']"], [name="' + field + '"]');
+						field_input
 							.addClass(andrewdanilovFeedback.error_field_class)
+							.next('.' + andrewdanilovFeedback.error_field_alert_element_class)
+							.text(error_text);
+						field_input
 							.parent()
 							.addClass(andrewdanilovFeedback.error_field_class)
-							.find('.' + andrewdanilovFeedback.error_field_alert_element_class)
-							.text(errors[field][0]);
+							.next('.' + andrewdanilovFeedback.error_field_alert_element_class)
+							.text(error_text);
 					}
 				}
 			} else {

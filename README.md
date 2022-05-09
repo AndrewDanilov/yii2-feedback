@@ -1,6 +1,7 @@
 Feedback forms
 ===================
-Tools for creating feedback and callback forms
+Component for creating feedback forms with customizable set of fields, user validators,
+html templates, file uploads, javascript callbacks.
 
 Installation
 ------------
@@ -118,6 +119,15 @@ return [
                     'maxlength' => 1000,
                     'class' => 'field-comment',
                 ],
+                'img' => [
+                    'label' => 'Upload Image',
+                    'type' => 'file',
+                    'multiple' => true, // optional, default is false
+                    'maxFiles' => 10, // optional, default is 0, that equals no restriction
+                    'extensions' => 'pdf, docx', // optional, default is empty string, that equals to any extension
+                    'uploadDir' => '@webroot/upload/files', // optional, default is '@webroot/upload'
+                    'class' => 'field-file',
+                ],
                 'accept_agreement' => [
                     'label' => 'Accept user agreement',
                     'type' => 'checkbox',
@@ -137,13 +147,18 @@ You can use your own validators for field values. You just need to define 'valid
 For example, you can use php callable array:
 
 ```
-'field_name' => [
+// key is the field name
+'my_email' => [
     //...
     'validator' => ['frontend\components\validators\MyValidatorClass', 'myEmailValidator'],
 ];
+'my_phone' => [
+    //...
+    'validator' => ['frontend\components\validators\MyValidatorClass', 'myPhoneValidator'],
+];
 ```
 
-Then you need to create method `myEmailValidator` within class `MyValidatorClass`:
+Then you need to create methods `myEmailValidator` and `myPhoneValidator` within class `MyValidatorClass`:
 
 ```php
 <?php
@@ -162,10 +177,20 @@ class MyValidatorClass
             return [
                 'error' => 'Email is incorrect',
             ];
-            // or you can just return boolean false
-            //return false;
+            // or you can just return boolean false: "return false;"
         }
-        return true; // if all is ok - return boolean true;
+        return true; // if all is ok - return boolean true
+    }
+    
+    public static function myPhoneValidator($field_name, $field_value, $fields_values)
+    {
+        // check field only if it is filled
+        if ($field_value && !preg_match('~^[\d\-\(\)\+ ]+$~', $field_value)) {
+            // you can just return boolean false instead of an error array,
+            // then default error message will be used
+            return false;
+        }
+        return true; // if all is ok - return boolean true
     }
 }
 ```
@@ -180,7 +205,7 @@ return [
         'enableStrictParsing' => true,
         'rules' => [
             // ...
-            '<controller>/send' => '<controller>/send', // this needs to be add to represent ajax handler
+            '<controller>/send' => '<controller>/send', // this needs to be added to represent ajax handler
             '' => 'site/index',
         ],
     ],
@@ -249,7 +274,7 @@ return [
     // ...
     'controllerMap' => [
         // ...
-        'callback' => [
+        'call_me' => [
             'class' => 'andrewdanilov\feedback\FeedbackController',
             'formView' => '@frontend/views/feedback/default',
             'from' => ['admin@example.com' => 'My Site'],
@@ -260,6 +285,10 @@ return [
                 'email',
                 'phone',
                 'message',
+                'img' => [
+                    'type' => 'file',
+                    'multiple' => true,
+                ],
             ],
         ],
     ],
@@ -270,8 +299,8 @@ Widget call:
 
 ```php
 <?= \andrewdanilov\feedback\FeedbackWidget::widget([
-    'controller' => 'callback',
-    'jsCallback' => '$(".callback-success-message").show();',
+    'controller' => 'call_me',
+    'jsCallback' => '$(".call_me-success-message").show();',
 ]) ?>
 ```
 
@@ -292,13 +321,23 @@ Form view `frontend/views/feedback/default.php`
 
 <form action="<?= $route ?>" id="<?= $options['id'] ?>">
     <input type="hidden" name="<?= \Yii::$app->request->csrfParam ?>" value="<?= \Yii::$app->request->csrfToken ?>">
+    <!-- variables needs to be placed into an array "data" -->
     <input type="text" name="data[name]">
+    <p class="help-block"></p><!-- block for printing field error must be placed right after input element or right after its parent element -->
     <input type="text" name="data[email]">
+    <p class="help-block"></p>
     <input type="text" name="data[phone]">
+    <p class="help-block"></p>
     <textarea name="data[message]"></textarea>
+    <!-- we can't place files variables into an array "data", so use direct variable name in attribute here -->
+    <div class="my-file-uploader">
+        <!-- for multiple file selecting you need to add "multiple" attribute to input and [] to field name attribute -->
+        <input type="file" name="img[]" multiple>
+    </div>
+    <p class="help-block"></p><!-- block for printing field error must be placed right after input element or right after its parent element -->
     <input type="submit" value="Send">
 </form>
-<div class="callback-success-message">
+<div class="call_me-success-message">
     <div>Thank you!</div>
 </div>
 ```

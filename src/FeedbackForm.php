@@ -3,6 +3,8 @@ namespace andrewdanilov\feedback;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\Url;
+use yii\web\UploadedFile;
 
 /**
  * FeedbackForm is the model behind the feedback form.
@@ -72,9 +74,45 @@ class FeedbackForm extends Model
 	{
 		if ($this->validate()) {
 			$values = [];
+            // if there is uploaded files - adding them to field values array
+            if (!empty($_FILES)) {
+                $this->data = array_merge($this->data, $_FILES);
+            }
 			foreach ($this->data as $key => $value) {
 				if (array_key_exists($key, $this->fields)) {
 					if (empty($this->fields[$key]['exclude'])) {
+                        if ($this->fields[$key]['type'] === 'file') {
+                            $uploadModel = new UploadFile();
+                            if (isset($this->fields[$key]['maxFiles'])) {
+                                $uploadModel->maxFiles = $this->fields[$key]['maxFiles'];
+                            }
+                            if (isset($this->fields[$key]['extensions'])) {
+                                $uploadModel->extensions = $this->fields[$key]['extensions'];
+                            }
+                            if (isset($this->fields[$key]['uploadDir'])) {
+                                $uploadModel->uploadDir = $this->fields[$key]['uploadDir'];
+                            }
+                            if (!empty($this->fields[$key]['multiple'])) {
+                                $uploadModel->files = UploadedFile::getInstancesByName($key);
+                            } else {
+                                $uploadModel->files = array(UploadedFile::getInstanceByName($key));
+                            }
+                            if ($uploadModel->validate()) {
+                                $basePath = Yii::getAlias('@webroot');
+                                // converting paths to urls
+                                $value = array_map(function($filePath) use ($basePath) {
+                                    if (strpos($filePath, $basePath) === 0) {
+                                        $fileUrl = substr($filePath, strlen($basePath));
+                                        return Url::home(true) . ltrim($fileUrl, DIRECTORY_SEPARATOR);
+                                    }
+                                    return $filePath;
+                                }, $uploadModel->upload());
+                            } else {
+                                foreach ($uploadModel->errors as $error) {
+                                    $this->addError($key, $error);
+                                }
+                            }
+                        }
 						if (isset($this->fields[$key]['label'])) {
 							$label = $this->fields[$key]['label'];
 						} else {
@@ -87,22 +125,25 @@ class FeedbackForm extends Model
 					}
 				}
 			}
-			if (isset($this->data['extra'])) {
-				$values[] = [
-					'label' => $this->extraFieldLabel,
-					'value' => $this->data['extra'],
-				];
-			}
-			$mailer = Yii::$app->mailer;
-			$mailer->htmlLayout = $this->mailLayout;
-			$message = $mailer->compose($this->mailView, ['values' => $values])
-				->setFrom($from)
-				->setTo($to)
-				->setSubject($subject);
-			// отправляем письмо
-			if ($message->send()) {
-				return true;
-			}
+            // if there was no additive errors (i.e., on file uploads)
+            if (!$this->hasErrors()) {
+                if (isset($this->data['extra'])) {
+                    $values[] = [
+                        'label' => $this->extraFieldLabel,
+                        'value' => $this->data['extra'],
+                    ];
+                }
+                $mailer = Yii::$app->mailer;
+                $mailer->htmlLayout = $this->mailLayout;
+                $message = $mailer->compose($this->mailView, ['values' => $values])
+                    ->setFrom($from)
+                    ->setTo($to)
+                    ->setSubject($subject);
+                // отправляем письмо
+                if ($message->send()) {
+                    return true;
+                }
+            }
 		}
 		return false;
 	}

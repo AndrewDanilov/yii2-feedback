@@ -6,10 +6,10 @@ use yii\helpers\Html;
 
 ?>
 
-Письмо с сайта:<br /><br />
+Letter from site:<br /><br />
 
 <?php foreach ($values as $value) { ?>
-	<?php if ($value['value'] === 'on') { $value['value'] = 'Да'; } ?>
+	<?php if ($value['value'] === 'on') { $value['value'] = 'Yes'; } ?>
 	<?php if (is_array($value['value'])) { ?>
 		<?= Html::encode($value['label']) ?>: <b><?= Html::encode(implode(', ', $value['value'])) ?></b><br />
 	<?php } else { ?>
