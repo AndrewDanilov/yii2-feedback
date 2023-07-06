@@ -1,5 +1,6 @@
 var andrewdanilovFeedback = {
 	error_field_class: 'has-error',
+	scroll_to_first_error: true,
 	error_field_alert_element_class: 'help-block',
 	register: function (form_id, redirect, is_lightbox, delay) {
 		var self = andrewdanilovFeedback;
@@ -95,6 +96,17 @@ var andrewdanilovFeedback = {
 							.text(error_text);
 					}
 				}
+				// scrolling to first error element
+				if (andrewdanilovFeedback.scroll_to_first_error) {
+					var error_elements = form.find('.' + andrewdanilovFeedback.error_field_class);
+					if (error_elements.length) {
+						$('html, body').animate({
+							scrollTop: $(error_elements[0]).offset().top - 200
+						}, 1000);
+					}
+				}
+				// triggering error event
+				$(document).trigger(form.attr('id') + '-error');
 			} else {
 				alert('При отправке сообщения произошла неожиданная ошибка. Попробуйте позже.');
 			}

@@ -244,6 +244,8 @@ In View add widget call:
     ],
     // optional: javascript code to execute after success submit happen
     'jsCallback' => 'ga("send", "event", "my_form", "submit"); yaCounter100500.reachGoal("my_goal");',
+    // optional: javascript code to execute after form send error happen
+    'jsErrorCallback' => 'alert("Error happened");',
     // optional: redirect visitor to page after submitting form
     'redirect' => \yii\helpers\Url::to(['site/index']),
     // optional: success form submit message
@@ -255,6 +257,8 @@ In View add widget call:
     ],
     // optional: class to be added to input element and its parent in case an error, default is 'has-errors'
     'errorFieldClass' => 'error',
+    // optional: scroll to first error field after form send if there is an error, default is true
+    'scrollToFirstError' => false,
     // optional: class of element containing error message, default is 'help-block'
     'errorFieldAlertElementClass' => 'alert',
     // optional: form block options
@@ -263,6 +267,20 @@ In View add widget call:
     ],
 ]) ?>
 ```
+
+For error handling and successful submissions, you can define js callback functions with the `jsErrorCallback` and `jsCallback` parameters in your widget call. Also, you can use the corresponding defined js events. For example:
+
+```javascript
+$(function() {
+    $(document).on('mywidgetID-form-submit', function() {
+        alert('success');
+    });
+    $(document).on('mywidgetID-form-error', function() {
+        alert('error');
+    });	
+});
+```
+
 
 Simple example
 --------------
