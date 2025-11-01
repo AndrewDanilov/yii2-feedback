@@ -16,6 +16,7 @@ class FeedbackController extends Controller
 	public $to = [];
 	public $subject;
 	public $fields = [];
+    public $formModelClass;
 
 	public function init()
 	{
@@ -35,6 +36,9 @@ class FeedbackController extends Controller
 		if (empty($this->subject)) {
 			$this->subject = 'Mail from site';
 		}
+        if (empty($this->formModelClass)) {
+            $this->formModelClass = 'andrewdanilov\feedback\FeedbackForm';
+        }
 		foreach ($this->fields as $key => $field) {
 			if (!is_array($field)) {
 				// convert simple elements to array-notation
@@ -75,7 +79,8 @@ class FeedbackController extends Controller
 		if (Yii::$app->request->isAjax) {
 			if (Yii::$app->request->isPost) {
 
-				$model = new FeedbackForm();
+                $modelClass = $this->formModelClass;
+				$model = new $modelClass();
 				$model->mailView = $this->mailView;
 				$model->mailLayout = $this->mailLayout;
 				$model->extraFieldLabel = $this->extraFieldLabel;

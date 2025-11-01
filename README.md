@@ -71,6 +71,10 @@ return [
             'from' => ['admin@example.com' => 'My Site'],
             'to' => ['admin@example.com', 'admin2@example.com'],
             'subject' => 'Mail from site', // optional
+            // Your own model for loading, validating and sending data through email
+            // must implements validateData(), sendFeedback() methods. You can extend
+            // it from default class \andrewdanilov\feedback\FormModelClass
+            'formModelClass' => 'andrewdanilov\feedback\FormModelClass', // optional
             'fields' => [
                 'name' => [
                     'required' => true, // optional
